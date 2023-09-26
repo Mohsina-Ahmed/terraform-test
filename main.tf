@@ -15,7 +15,7 @@ terraform {
 }
 
 provider "aws" {
-  profile = "terraform"
+  #profile = "terraform"
   region  = "eu-west-2"
 }
 resource "aws_instance" "pedantic_instance" {
