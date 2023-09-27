@@ -21,7 +21,7 @@ provider "aws" {
 resource "aws_instance" "pedantic_instance" {
   ami           = "ami-0da7f840f6c348e2d"
   instance_type = "t2.micro"
-  key_name      = "pedantic-pandas-key"
+  #key_name      = "pedantic-pandas-key"
 
   tags = {
     Name = "pedantic-pandas"
@@ -46,5 +46,27 @@ resource "aws_security_group" "pedantic_pandas_security" {
     protocol         = "tcp"
     # cidr_blocks      = [aws_vpc.main.cidr_block]
     # ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+  }
+}
+resource "aws_elastic_beanstalk_application" "pedantic_pandas_app" {
+  name        = "pedantic-pandas-task-listing-app"
+  description = "Task listing app"
+}
+
+resource "aws_elastic_beanstalk_environment" "pedantic_pandas_app_environment" {
+  name                = "pedantic-pandas-task-listing-app-environment"
+  application         = aws_elastic_beanstalk_application.pedantic_pandas_app.name
+  solution_stack_name = "64bit Amazon Linux 2 v3.4.5 running Docker"
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "IamInstanceProfile"
+    value     = aws_iam_instance_profile.pedantic_pandas_ec2_instance_profile.name
+  }
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name = "EC2KeyName"
+    value = "pedantic-pandas-key"
   }
 }
