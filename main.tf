@@ -133,3 +133,15 @@ resource "aws_s3_bucket_object" "dockerrun_object" {
   source = "Dockerrun.aws.json"  # Path to your local Dockerrun.aws.json file
   acl    = "private"  # Adjust the access control settings as needed
 }
+resource "aws_db_instance" "rds_app" {
+  allocated_storage    = 10
+  engine               = "postgres"
+  engine_version       = "13.3"
+  instance_class       = "db.m6g.large"
+  identifier           = "pedantic-pandas-app-prod"
+  name                 = "pedantic-pandas-app-database"
+  username             = "root"
+  password             = "password"
+  skip_final_snapshot  = true
+  publicly_accessible = true
+}
