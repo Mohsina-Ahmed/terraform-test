@@ -48,6 +48,14 @@ resource "aws_security_group" "pedantic_pandas_security" {
     # ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
   }
 }
+resource "aws_iam_instance_profile" "pedantic_pandas_ec2_instance_profile" {
+  name = "pedantic-pandas"  # Replace with your desired instance profile name
+
+  # Attach roles or policies if needed
+  # roles = [aws_iam_role.example_role.name]
+  # instance_profile = aws_iam_instance_profile.example_profile.name
+}
+
 resource "aws_elastic_beanstalk_application" "pedantic_pandas_app" {
   name        = "pedantic-pandas-task-listing-app"
   description = "Task listing app"
