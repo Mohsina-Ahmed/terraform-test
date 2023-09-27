@@ -120,3 +120,9 @@ resource "aws_iam_role_policy_attachment" "pedantic_pandas_policy_attachment" {
   role       = aws_iam_role.pedantic_pandas_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 }
+
+# Define an S3 bucket resource for holding Dockerrun.aws.json
+resource "aws_s3_bucket" "dockerrun_bucket" {
+  bucket = "pedantic-pandas-for-docker"  # Replace with your desired bucket name
+  acl    = "private"  # Adjust the access control settings as needed
+}
