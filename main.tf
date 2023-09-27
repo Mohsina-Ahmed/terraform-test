@@ -18,6 +18,32 @@ provider "aws" {
   #profile = "terraform"
   region  = "eu-west-2"
 }
+
+resource "aws_iam_role" "pedantic_pandas_role" {
+  name = "pedantic-pandas-role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_instance_profile" "pedantic_pandas_ec2_instance_profile" {
+  name = "pedantic-pandas-profile"  # Replace with your desired instance profile name
+  role = aws_iam_role.pedantic_pandas_role.name
+}
+
 resource "aws_instance" "pedantic_instance" {
   ami           = "ami-0da7f840f6c348e2d"
   instance_type = "t2.micro"
@@ -48,13 +74,6 @@ resource "aws_security_group" "pedantic_pandas_security" {
     # ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
   }
 }
-resource "aws_iam_instance_profile" "pedantic_pandas_ec2_instance_profile" {
-  name = "pedantic-pandas"  # Replace with your desired instance profile name
-
-  # Attach roles or policies if needed
-  # roles = [aws_iam_role.example_role.name]
-  # instance_profile = aws_iam_instance_profile.example_profile.name
-}
 
 resource "aws_elastic_beanstalk_application" "pedantic_pandas_app" {
   name        = "pedantic-pandas-task-listing-app"
@@ -62,9 +81,9 @@ resource "aws_elastic_beanstalk_application" "pedantic_pandas_app" {
 }
 
 resource "aws_elastic_beanstalk_environment" "pedantic_pandas_app_environment" {
-  name                = "pedantic-pandas-task-listing-app-environment"
+  name                = "pedantic-pandas-app-environment"
   application         = aws_elastic_beanstalk_application.pedantic_pandas_app.name
-  solution_stack_name = "64bit Amazon Linux 2 v3.4.5 running Docker"
+  solution_stack_name = "64bit Amazon Linux 2023 v4.0.1 running Docker"
 
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
