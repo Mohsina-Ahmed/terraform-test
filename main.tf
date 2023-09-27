@@ -115,3 +115,8 @@ resource "aws_elastic_beanstalk_environment" "pedantic_pandas_app_environment" {
     value = "pedantic-pandas-key"
   }
 }
+
+resource "aws_iam_role_policy_attachment" "pedantic_pandas_policy_attachment" {
+  role       = aws_iam_role.pedantic_pandas_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+}
