@@ -126,3 +126,10 @@ resource "aws_s3_bucket" "dockerrun_bucket" {
   bucket = "pedantic-pandas-for-docker"  # Replace with your desired bucket name
   acl    = "private"  # Adjust the access control settings as needed
 }
+# Upload the Dockerrun.aws.json file to the S3 bucket
+resource "aws_s3_bucket_object" "dockerrun_object" {
+  bucket = aws_s3_bucket.dockerrun_bucket.id
+  key    = "Dockerrun.aws.json"  # The object key (file name)
+  source = "Dockerrun.aws.json"  # Path to your local Dockerrun.aws.json file
+  acl    = "private"  # Adjust the access control settings as needed
+}
