@@ -58,7 +58,7 @@ resource "aws_iam_instance_profile" "pedantic_pandas_ec2_instance_profile" {
 
 resource "aws_elastic_beanstalk_application" "pedantic_pandas_app" {
   name        = "pedantic-pandas-task-listing-app"
-  description = "Task listing app"
+  description = "Task listing app v1"
 }
 
 resource "aws_elastic_beanstalk_environment" "pedantic_pandas_app_environment" {
