@@ -76,8 +76,8 @@ resource "aws_security_group" "pedantic_pandas_security" {
 }
 
 resource "aws_elastic_beanstalk_application" "pedantic_pandas_app" {
-  name        = "pedantic-pandas-task-listing-app"
-  description = "Task listing app v1"
+  name        = "pedantic-pandas-app"
+  description = "Task listing app v2"
 }
 
 resource "aws_elastic_beanstalk_environment" "pedantic_pandas_app_environment" {
