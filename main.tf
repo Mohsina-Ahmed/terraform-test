@@ -21,6 +21,7 @@ provider "aws" {
 resource "aws_instance" "pedantic_instance" {
   ami           = "ami-0da7f840f6c348e2d"
   instance_type = "t2.micro"
+  key_name      = "pedantic-pandas-key"
 
   tags = {
     Name = "pedantic-pandas"
