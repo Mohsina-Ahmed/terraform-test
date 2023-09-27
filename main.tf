@@ -44,17 +44,17 @@ resource "aws_iam_instance_profile" "pedantic_pandas_ec2_instance_profile" {
   role = aws_iam_role.pedantic_pandas_role.name
 }
 
-resource "aws_instance" "pedantic_instance" {
-  ami           = "ami-0da7f840f6c348e2d"
-  instance_type = "t2.micro"
-  #key_name      = "pedantic-pandas-key"
+# resource "aws_instance" "pedantic_instance" {
+#   ami           = "ami-0da7f840f6c348e2d"
+#   instance_type = "t2.micro"
+#   #key_name      = "pedantic-pandas-key"
 
-  tags = {
-    Name = "pedantic-pandas"
-  }
+#   tags = {
+#     Name = "pedantic-pandas"
+#   }
 
-  security_groups = [aws_security_group.pedantic_pandas_security.name]
-}
+#   security_groups = [aws_security_group.pedantic_pandas_security.name]
+# }
 
 data "aws_vpc" "default_vpc" {
   id = "vpc-080dbb0b7dc86503a"
