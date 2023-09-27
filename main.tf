@@ -44,6 +44,24 @@ resource "aws_iam_instance_profile" "pedantic_pandas_ec2_instance_profile" {
   role = aws_iam_role.pedantic_pandas_role.name
 }
 
+# Attach the AWSElasticBeanstalkWebTier policy
+resource "aws_iam_role_policy_attachment" "web_tier_attachment" {
+  policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier"
+  role       = aws_iam_role.pedantic_pandas_role.name
+}
+
+# Attach the AWSElasticBeanstalkMulticontainerDocker policy
+resource "aws_iam_role_policy_attachment" "multicontainer_docker_attachment" {
+  policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkMulticontainerDocker"
+  role       = aws_iam_role.pedantic_pandas_role.name
+}
+
+# Attach the AWSElasticBeanstalkWorkerTier policy
+resource "aws_iam_role_policy_attachment" "worker_tier_attachment" {
+  policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkWorkerTier"
+  role       = aws_iam_role.pedantic_pandas_role.name
+}
+
 # resource "aws_instance" "pedantic_instance" {
 #   ami           = "ami-0da7f840f6c348e2d"
 #   instance_type = "t2.micro"
