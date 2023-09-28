@@ -142,6 +142,26 @@ resource "aws_db_instance" "rds_app" {
   name                 = "pedantic-pandas-app-database"
   username             = "root"
   password             = "password"
+  db_subnet_group_name = "default_vpc"
   skip_final_snapshot  = true
   publicly_accessible = true
+}
+
+data "aws_subnet" "subnet-a" {
+  id = "subnet-0384310cda7f3225b"
+}
+data "aws_subnet" "subnet-b" {
+  id = "subnet-0e606c290592d4005"
+}
+data "aws_subnet" "subnet-c" {
+  id = "subnet-04a8c56d32950f29b"
+}
+
+resource "aws_db_subnet_group" "default" {
+  name       = "main"
+  subnet_ids = [data.aws_subnet.subnet-a.id, data.aws_subnet.subnet-b.id, data.aws_subnet.subnet-c.id]
+
+  tags = {
+    Name = "My DB subnet group"
+  }
 }
