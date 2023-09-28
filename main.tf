@@ -136,13 +136,13 @@ resource "aws_s3_bucket_object" "dockerrun_object" {
 resource "aws_db_instance" "rds_app" {
   allocated_storage    = 10
   engine               = "postgres"
-  engine_version       = "13.3"
-  instance_class       = "db.m6g.large"
+  engine_version       = "15.3"
+  instance_class       = "db.t3.micro"
   identifier           = "pedantic-pandas-app-prod"
-  name                 = "pedantic-pandas-app-database"
+  name                 = "PedanticPandasAppDatabase"
   username             = "root"
   password             = "password"
-  db_subnet_group_name = "default_vpc"
+  db_subnet_group_name = resource.aws_db_subnet_group.default.name
   skip_final_snapshot  = true
   publicly_accessible = true
 }
@@ -158,7 +158,7 @@ data "aws_subnet" "subnet-c" {
 }
 
 resource "aws_db_subnet_group" "default" {
-  name       = "main"
+  name       = "main-pedantic-pandas"
   subnet_ids = [data.aws_subnet.subnet-a.id, data.aws_subnet.subnet-b.id, data.aws_subnet.subnet-c.id]
 
   tags = {
